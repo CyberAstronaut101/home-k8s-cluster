@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metallb-config
+data:
+  config: |
+    address-pools:
+    - name: server-ip-space
+      protocol: layer2
+      addresses:
+      - 10.21.130.20-10.21.130.200

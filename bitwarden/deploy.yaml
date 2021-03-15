@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: bitwarden
+  name: bitwarden_rs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bitwarden
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bitwarden
+    spec:
+      containers:
+      - image: bitwardenrs/server:latest0
+        name: hello-world
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bitwarden-admin-token
+                  key: token
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+            - containerPort: 3012
+              name: websocket
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /data
+              name: bitwarden-data
