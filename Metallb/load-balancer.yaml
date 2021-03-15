@@ -6,6 +6,7 @@ spec:
   selector:
     app: nginx-test-two
   type: LoadBalancer
+  loadBalancerIP: 10.21.180.40
   ports:  
   - name: http
     port: 80

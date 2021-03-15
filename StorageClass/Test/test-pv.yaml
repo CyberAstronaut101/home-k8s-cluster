@@ -1,14 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pihole-local-dnsmasq-claim
+  name: ssd-nfs-pvc-1
 spec:
   storageClassName: ssd-nfs-storage
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
-  selector:
-    matchLabels:
-      directory: dnsmasq.d
+      storage: 10Mi

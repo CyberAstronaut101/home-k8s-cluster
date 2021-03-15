@@ -1,0 +1,39 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nfs-client-provisioner
+spec:
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          image: quay.io/external_storage/nfs-client-provisioner-arm:latest
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+          volumeMounts:
+            - name: nfs-client-ssd
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: masoncomputers.com/nfs
+            - name: NFS_SERVER
+              value: 10.21.180.4
+            - name: NFS_PATH
+              value: /mnt/share
+      volumes:
+        - name: nfs-client-ssd
+          nfs:
+            server: 10.21.180.4
+            path: /mnt/share
