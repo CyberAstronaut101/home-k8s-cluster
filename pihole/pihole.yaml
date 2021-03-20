@@ -71,7 +71,7 @@ spec:
   type: LoadBalancer
   loadBalancerIP: 10.21.180.50
   ports:
-  - port: 8000
+  - port: 80
     targetPort: 80
     name: pihole-admin
   - port: 53
